@@ -1,5 +1,2 @@
-export class TrackerStorage {
-	public addEvent() {
-
-	}
-}
+export { TrackerStorage } from "./TrackerStorage";
+export { ITrackerStorage } from "./ITrackerStorage";
