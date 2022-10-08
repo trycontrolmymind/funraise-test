@@ -1,4 +1,5 @@
-import { Configuration } from 'webpack'
+import { Configuration } from 'webpack';
+import CopyPlugin from "copy-webpack-plugin";
 
 const config: Configuration = {
   output: {
@@ -18,6 +19,13 @@ const config: Configuration = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        "src/html/"
+      ],
+    }),
+  ],
 }
 
 export default config
