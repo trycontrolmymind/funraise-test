@@ -1,2 +1,2 @@
-export { ITrackEventInfo as ITrackEvent } from "./ITrackEvent";
+export { ITrackEventInfo, ITrackEvent } from "./ITrackEvent";
 export { TrackEvent } from "./TrackEvent";
