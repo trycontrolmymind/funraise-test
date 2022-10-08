@@ -24,6 +24,11 @@ export class TrackerEmitter implements ITrackerEmitter {
 		});
 	}
 
+	/**
+	 * Send event queue if it > maxSize or sendDebounced
+	 *
+	 * @param {ITrackEvent} event Event to track
+	 */
 	public addEvent(event: ITrackEvent) {
 		this.storage.addEvent(event);
 		if (this.storage.size() >= this.maxSize) {
