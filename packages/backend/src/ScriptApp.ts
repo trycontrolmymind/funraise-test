@@ -29,8 +29,10 @@ export class ScriptApp {
 	public async init() {
 		await this.db.connect(this.config["MONGO_URI"]);
 		this.app = express();
-		this.app.use(cors());
-		this.app.use(express.json());
+		this.app.use(cors({
+			maxAge: 0,
+		}));
+		this.app.use(express.json({ type: ["text/plain", "application/json"] }));
 
 		this.app.use(helmet({
 			contentSecurityPolicy: false,

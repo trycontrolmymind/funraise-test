@@ -24,7 +24,7 @@ export class TrackerTransport implements ITrackerTransport {
 				body: this.formatBody(events),
 				method: "POST",
 				headers: {
-					"Content-Type": "application/json",
+					"Content-Type": "text/plain",
 				},
 				mode: "cors"
 			})
