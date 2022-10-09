@@ -22,7 +22,9 @@ const config: Configuration = {
   plugins: [
     new CopyPlugin({
       patterns: [
-        "src/html/"
+        { from: "src/html/index.html", to: "html/index.html" },
+        { from: "src/html/index.html", to: "html/1.html" },
+        { from: "src/html/index.html", to: "html/2.html" }
       ],
     }),
   ],
