@@ -28,7 +28,7 @@ export class HtmlApp {
 		this.validateEnv()
 	}
 
-	public init(port: number) {
+	public init() {
 		this.app = express();
 
 		this.app.use(helmet({
@@ -39,6 +39,7 @@ export class HtmlApp {
 		const pathToHtml = path.join(process.cwd(), this.config["HTML_DIST_PATH"]);
 		this.app.use(express.static(pathToHtml));
 
+		const port = parseInt(this.config["PUBLIC_PORT"], 10);
 		this.app.listen(port, () => {
 			this.logger.info(`Listening port ${port}...`)
 		})
