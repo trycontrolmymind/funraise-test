@@ -1,6 +1,6 @@
 import { ILogger, Logger } from "../Logger";
 import { TrackerEmitter } from "../TrackerEmitter/TrackerEmitter";
-import { TrackEvent } from "../TrackEvent";
+import { ITrackPrevEvent, TrackEvent } from "../TrackEvent";
 import { ITracker } from "./ITracker";
 
 /**
@@ -10,6 +10,13 @@ export class Tracker implements ITracker {
 	private readonly logger: ILogger = new Logger();
 
 	private readonly trackerEmitter = new TrackerEmitter();
+
+	constructor(prevEvents: ITrackPrevEvent[]) {
+		prevEvents.forEach((ev) => {
+			const trackEvent = new TrackEvent(ev);
+			this.trackerEmitter.addEvent(trackEvent);
+		})
+	}
 
 	/**
 	 * Track events to backend
@@ -22,7 +29,7 @@ export class Tracker implements ITracker {
 			this.logger.log(`Invalid input event and tags should be a strings`, `${{ event, tags }}`);
 		}
 
-		const trackEvent = new TrackEvent(event, tags);
+		const trackEvent = new TrackEvent({ event, tags });
 		this.trackerEmitter.addEvent(trackEvent);
 
 	}

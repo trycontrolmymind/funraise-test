@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "webpack --mode=production"
+    "build": "webpack"
   },
   "author": "Yandimirkin V.",
   "license": "ISC",

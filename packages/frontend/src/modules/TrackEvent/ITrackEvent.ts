@@ -10,3 +10,5 @@ export interface ITrackEventInfo {
 	title: string;
 	ts: string;
 }
+
+export type ITrackPrevEvent = Omit<ITrackEventInfo, 'url' | 'title'>

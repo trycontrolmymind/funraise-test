@@ -1,7 +1,13 @@
 import { ITracker, Tracker } from "./modules/Tracker";
+import { ITrackPrevEvent } from "./modules/TrackEvent";
 declare global {
 	interface Window { tracker: ITracker; }
 }
 
-const tracker = new Tracker();
-window["tracker"] = window["tracker"] || tracker;
+let prevEvents: ITrackPrevEvent[] = [];
+if (window['tracker']?.prevEvents) {
+	prevEvents = window['tracker'].prevEvents;
+	delete window['tracker'].prevEvents;
+}
+const tracker = new Tracker(prevEvents);
+window["tracker"] = tracker;

@@ -10,13 +10,15 @@ export class TrackEvent implements ITrackEvent {
 		return { ...this._info };
 	}
 
-	constructor(event: string, tags: string[]) {
+	constructor({ event, tags, ts }: {
+		event: string, tags: string[], ts?: string
+	}) {
 		this._info = {
 			event,
 			tags,
 			url: document.URL,
 			title: document.title,
-			ts: new Date().toISOString(),
+			ts: ts || new Date().toISOString(),
 		}
 	}
 }

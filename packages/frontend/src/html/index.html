@@ -1,7 +1,26 @@
 <html>
   <head>
     <title>Demo page</title>
-    <script src="http://localhost:8001/"></script>
+    <script>
+      ;((url) => {
+        window['tracker'] = {
+          prevEvents: [],
+          track: (event, ...tags) => {
+            window['tracker'].prevEvents.push({
+              event,
+              tags,
+              ts: new Date().toISOString(),
+            })
+          },
+        }
+
+        const el = document.createElement('script')
+        el.src = url
+        el.async = true
+
+        document.head.appendChild(el)
+      })('http://localhost:8001')
+    </script>
     <script>
       tracker.track('pageview')
       tracker.track('test', 'one', 'two', 'three')
