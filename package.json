@@ -5,7 +5,9 @@
     "packages/*"
   ],
   "scripts": {
-    "postinstall": "lerna bootstrap"
+    "postinstall": "lerna bootstrap",
+    "build": "lerna run build",
+    "start": "lerna run start"
   },
   "devDependencies": {
     "lerna": "^5.6.1"
