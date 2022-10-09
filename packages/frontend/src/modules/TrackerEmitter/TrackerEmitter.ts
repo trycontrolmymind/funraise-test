@@ -4,6 +4,7 @@ import { TrackerStorage, ITrackerStorage } from "../TrackerStorage";
 import { ITrackEvent } from "../TrackEvent";
 import { ITrackerEmitter } from "./ITrackerEmitter";
 import { ITrackerTransport, TrackerTransport } from "../TrackerTransport";
+import { Logger } from "../Logger";
 
 /**
  * Call transport with debounce 1s, on unload
@@ -11,6 +12,7 @@ import { ITrackerTransport, TrackerTransport } from "../TrackerTransport";
 export class TrackerEmitter implements ITrackerEmitter {
 	private readonly storage: ITrackerStorage;
 	private readonly transport: ITrackerTransport;
+	private readonly logger = new Logger();
 
 	private readonly timeout = 1000 as const;
 	private readonly maxSize = 3 as const;
@@ -20,7 +22,7 @@ export class TrackerEmitter implements ITrackerEmitter {
 		this.transport = new TrackerTransport();
 
 		window.addEventListener('unload', () => {
-			this.sendAllEvents();
+			this.sendAllEventsUnload();
 		});
 	}
 
@@ -47,10 +49,21 @@ export class TrackerEmitter implements ITrackerEmitter {
 	private sendAllEvents() {
 		const events = this.storage.getEvents();
 		this.transport.send(events)
-			.catch((e) => {
-				console.log(e);
+			.catch((err) => {
+				this.logger.log(err);
 				events.map(e => this.addEvent(e));
 			});
+	}
+
+	private sendAllEventsUnload() {
+		const events = this.storage.getEvents();
+		const isSupported = this.transport.sendBeacon(events);
+
+		if (isSupported) {
+			this.storage.clear();
+		} else {
+			this.sendAllEvents();
+		}
 	}
 
 }
