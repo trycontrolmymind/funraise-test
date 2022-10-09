@@ -2,7 +2,7 @@ import { AllowedSchema } from "express-json-validator-middleware";
 
 export const scriptAppSchema: AllowedSchema = {
 	type: "object",
-	required: ["SCRIPT_PORT", "SCRIPT_DIST_PATH"],
+	required: ["SCRIPT_PORT", "SCRIPT_DIST_PATH", "MONGO_URI"],
 	properties: {
 		SCRIPT_DIST_PATH: {
 			type: "string",
@@ -12,7 +12,9 @@ export const scriptAppSchema: AllowedSchema = {
 			pattern: "\\d{4}",
 			type: "string",
 		},
-
+		MONGO_URI: {
+			type: "string"
+		}
 	},
 };
 

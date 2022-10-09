@@ -8,7 +8,9 @@ import addAjvFormats from "ajv-formats";
 
 import { EnvValidator } from "./EnvValidator";
 import { scriptAppSchema } from "./schemas/envSchemas";
-import { trackArraySchema, trackSchema } from "./schemas/trackSchema";
+import { trackArraySchema } from "./schemas/trackSchema";
+import { Database } from "./Database";
+import { TrackEvent } from "./model/TrackEvent.model";
 
 
 /**
@@ -18,12 +20,14 @@ export class ScriptApp {
 	private app: express.Express;
 	private readonly logger = pino();
 	private readonly envSchema = scriptAppSchema;
+	private readonly db = new Database();
 
 	constructor(private readonly config: Record<string, string>) {
 		new EnvValidator(this.envSchema, this.config);
 	}
 
-	public init() {
+	public async init() {
+		await this.db.connect(this.config["MONGO_URI"]);
 		this.app = express();
 		this.app.use(cors());
 		this.app.use(express.json());
@@ -48,8 +52,12 @@ export class ScriptApp {
 		const { validate, ajv } = new Validator({});
 		addAjvFormats(ajv);
 
-		this.app.post("/track", validate({ body: trackArraySchema }), (_, response) => {
+		this.app.post("/track", validate({ body: trackArraySchema }), (req, response) => {
 			response.status(200).send();
+
+			TrackEvent.insertMany(req.body).catch((err) => {
+				this.logger.error(err);
+			})
 		});
 	}
 

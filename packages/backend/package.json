@@ -24,6 +24,7 @@
     "cors": "^2.8.5",
     "express-json-validator-middleware": "^3.0.1",
     "helmet": "^6.0.0",
+    "mongoose": "^6.6.5",
     "pino": "^8.6.1"
   }
 }
