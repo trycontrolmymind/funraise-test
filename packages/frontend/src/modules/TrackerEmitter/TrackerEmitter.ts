@@ -1,4 +1,4 @@
-import debounce from "lodash/debounce";
+import throttle from "lodash/throttle";
 
 import { TrackerStorage, ITrackerStorage } from "../TrackerStorage";
 import { ITrackEvent } from "../TrackEvent";
@@ -39,7 +39,7 @@ export class TrackerEmitter implements ITrackerEmitter {
 		}
 	}
 
-	private sendDebounced = debounce(() => {
+	private sendDebounced = throttle(() => {
 		this.sendAllEvents();
 		this.storage.clear();
 	}, this.timeout);
@@ -47,7 +47,8 @@ export class TrackerEmitter implements ITrackerEmitter {
 	private sendAllEvents() {
 		const events = this.storage.getEvents();
 		this.transport.send(events)
-			.catch(() => {
+			.catch((e) => {
+				console.log(e);
 				events.map(e => this.addEvent(e));
 			});
 	}
