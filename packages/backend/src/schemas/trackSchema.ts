@@ -12,7 +12,8 @@ export const trackSchema: AllowedSchema = {
 			type: "array",
 			items: {
 				type: "string"
-			}
+			},
+			maxItems: 50,
 		},
 		url: {
 			type: "string",
@@ -30,6 +31,7 @@ export const trackSchema: AllowedSchema = {
 
 export const trackArraySchema: AllowedSchema = {
 	type: "array",
-	items: [trackSchema],
+	items: trackSchema as any,
 	maxItems: 10,
+	minItems: 0,
 }
