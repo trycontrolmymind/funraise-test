@@ -37,6 +37,9 @@ cd packages/backend
 npm run start
 ```
 
+Serving HTML on http://localhost:8000  
+Serving script and /track on http://localhost:8001
+
 # Bonus
 
 Напишите свой сниппет вставки трекера на страницу, замените им <script src="http://localhost:8001/"></script>, и объясните зачем “все так усложнили”.
