@@ -38,7 +38,9 @@ npm run start
 ```
 
 Serving HTML on http://localhost:8000  
-Serving script and /track on http://localhost:8001
+Serving script and /track on http://localhost:8001  
+
+ENV Variables https://github.com/trycontrolmymind/funraise-test/blob/master/packages/backend/.env
 
 # Bonus
 
